@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Q3 脑力挑战 · 邀请函</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e8dcc8;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      padding: 16px;
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .invite-card {
+      width: 100%;
+      max-width: 560px;
+      background: #f5ecd9;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(30, 20, 10, 0.25);
+      overflow: hidden;
+      border: 3px solid #1a1a1a;
+      position: relative;
+    }
+
+    .card-header {
+      background: #1a1a1a;
+      padding: 28px 24px 24px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid #c9a44c;
+    }
+
+    .card-header::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: #c9a44c;
+      opacity: 0.15;
+    }
+
+    .card-header::after {
+      content: "";
+      position: absolute;
+      bottom: -70px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: #c9a44c;
+      opacity: 0.1;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: #c9a44c;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1.5px solid #c9a44c;
+      color: #c9a44c;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 6px 18px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .main-title {
+      color: #f5ecd9;
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 0 rgba(201, 164, 76, 0.3);
+    }
+
+    .sub-title {
+      color: #c9a44c;
+      font-size: 15px;
+      letter-spacing: 2px;
+      opacity: 0.95;
+    }
+
+    .gold-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 24px 0;
+    }
+
+    .gold-line .line {
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, #c9a44c, transparent);
+    }
+
+    .gold-line .diamond {
+      width: 8px;
+      height: 8px;
+      background: #c9a44c;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadeIn 0.45s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 封面 */
+    .cover-body {
+      padding: 30px 24px 32px;
+      text-align: center;
+    }
+
+    .cover-icon {
+      font-size: 40px;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .cover-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .cover-sub {
+      font-size: 15px;
+      color: #6a5c44;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+
+    .cover-info {
+      background: #fffdf8;
+      border: 2px solid #1a1a1a;
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .cover-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      color: #3a3020;
+      padding: 8px 0;
+      border-bottom: 1px dashed #d8c8a8;
+    }
+
+    .cover-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .cover-info-label {
+      color: #8a7e68;
+      font-weight: 600;
+    }
+
+    .cover-info-value {
+      color: #1a1a1a;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .cover-info-value.red { color: #d92b2b; }
+    .cover-info-value.blue { color: #2b5fd9; }
+
+    .open-btn {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      border: 2px solid #1a1a1a;
+      border-radius: 16px;
+      background: #c9a44c;
+      color: #1a1a1a;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      letter-spacing: 3px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .open-btn:hover {
+      background: #b8923a;
+      transform: translateY(-1px);
+    }
+
+    .open-btn:active {
+      transform: translateY(0);
+    }
+
+    .cover-footnote {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #8a7e68;
+      line-height: 1.7;
+    }
+
+    /* 输入姓名 */
+    .card-body {
+      padding: 24px 24px 28px;
+    }
+
+    .desc {
+      font-size: 16px;
+      color: #3a3020;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .desc strong {
+      color: #1a1a1a;
+      font-weight: 800;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 16px 18px;
+      border: 2px solid #1a1a1a;
+      border-radius: 14px;
+      font-size: 17px;
+      background: #fffdf8;
+      color: #1a1a1a;
+      outline: none;
+      transition: 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .input-group input:focus {
+      border-color: #c9a44c;
+      box-shadow: 0 0 0 4px rgba(201, 164, 76, 0.2);
+    }
+
+    .input-group input::placeholder {
+      color: #b0a890;
+      font-size: 16px;
+    }
+
+    .btn {
+      padding: 16px 26px;
+      border: 2px solid #1a1a1a;
+      border-radius: 14px;
+      background: #c9a44c;
+      color: #1a1a1a;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+      letter-spacing: 1px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .btn:hover {
+      background: #b8923a;
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .pass-card {
+      display: none;
+      background: #1a1a1a;
+      border-radius: 18px;
+      padding: 28px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #c9a44c;
+    }
+
+    .pass-card.show {
+      display: block;
+      animation: fadeIn 0.45s ease;
+    }
+
+    .pass-card::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #c9a44c;
+      opacity: 0.15;
+    }
+
+    .pass-card::after {
+      content: "";
+      position: absolute;
+      bottom: -50px;
+      right: -30px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #c9a44c;
+      opacity: 0.1;
+    }
+
+    .pass-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .pass-label {
+      color: #c9a44c;
+      font-size: 13px;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .pass-name {
+      color: #f5ecd9;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    .pass-team {
+      display: inline-block;
+      background: #c9a44c;
+      color: #1a1a1a;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 5px 18px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .pass-code {
+      display: inline-block;
+      background: #f5ecd9;
+      color: #1a1a1a;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      padding: 14px 26px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      font-family: "Courier New", monospace;
+      word-break: break-all;
+      border: 2px solid #c9a44c;
+      -webkit-user-select: all;
+      user-select: all;
+    }
+
+    .copy-btn {
+      display: block;
+      width: 100%;
+      margin: 0 auto 14px;
+      padding: 14px 20px;
+      border: 2px solid #c9a44c;
+      border-radius: 12px;
+      background: transparent;
+      color: #c9a44c;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      letter-spacing: 2px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .copy-btn:hover {
+      background: #c9a44c;
+      color: #1a1a1a;
+    }
+
+    .copy-btn:active {
+      transform: scale(0.98);
+    }
+
+    .copy-btn.copied {
+      background: #2b8a3e;
+      border-color: #2b8a3e;
+      color: #fff;
+    }
+
+    .pass-note {
+      color: #b0a890;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .pass-note strong {
+      color: #c9a44c;
+    }
+
+    .error-msg {
+      display: none;
+      background: #d92b2b;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 18px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 18px;
+      animation: shake 0.4s ease;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #8a7e68;
+      text-decoration: none;
+      border-bottom: 1px dashed #c9a44c;
+      padding-bottom: 2px;
+      cursor: pointer;
+    }
+
+    .back-link:hover {
+      color: #c9a44c;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      font-size: 13px;
+      color: #8a7e68;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .footer-note strong {
+      color: #1a1a1a;
+    }
+
+    /* 手机端放大 */
+    @media (max-width: 600px) {
+      body {
+        padding: 8px;
+        align-items: flex-start;
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+      }
+
+      .invite-card {
+        border-radius: 22px;
+        max-width: 100%;
+      }
+
+      .card-header {
+        padding: 32px 22px 28px;
+      }
+
+      .brand {
+        font-size: 26px;
+        letter-spacing: 5px;
+        margin-bottom: 16px;
+      }
+
+      .badge {
+        font-size: 16px;
+        padding: 8px 24px;
+        letter-spacing: 4px;
+        margin-bottom: 20px;
+      }
+
+      .main-title {
+        font-size: 64px;
+        letter-spacing: 10px;
+        margin-bottom: 10px;
+      }
+
+      .sub-title {
+        font-size: 19px;
+        letter-spacing: 3px;
+      }
+
+      .gold-line {
+        padding: 18px 22px 0;
+      }
+
+      .cover-body {
+        padding: 32px 22px 34px;
+      }
+
+      .cover-icon {
+        font-size: 52px;
+        margin-bottom: 18px;
+      }
+
+      .cover-title {
+        font-size: 30px;
+        letter-spacing: 3px;
+        margin-bottom: 14px;
+      }
+
+      .cover-sub {
+        font-size: 18px;
+        line-height: 2;
+        margin-bottom: 26px;
+      }
+
+      .cover-info {
+        padding: 20px 22px;
+        border-radius: 18px;
+        margin-bottom: 28px;
+      }
+
+      .cover-info-row {
+        font-size: 17px;
+        padding: 10px 0;
+      }
+
+      .open-btn {
+        padding: 22px 24px;
+        font-size: 21px;
+        border-radius: 18px;
+        letter-spacing: 4px;
+      }
+
+      .cover-footnote {
+        font-size: 15px;
+        margin-top: 20px;
+      }
+
+      .card-body {
+        padding: 30px 22px 34px;
+      }
+
+      .desc {
+        font-size: 19px;
+        line-height: 2;
+        margin-bottom: 30px;
+      }
+
+      .input-group {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .input-group input {
+        padding: 22px 22px;
+        font-size: 20px;
+        border-radius: 18px;
+      }
+
+      .input-group input::placeholder {
+        font-size: 19px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 22px 24px;
+        font-size: 21px;
+        border-radius: 18px;
+        letter-spacing: 3px;
+      }
+
+      .pass-card {
+        padding: 36px 22px;
+        border-radius: 20px;
+      }
+
+      .pass-label {
+        font-size: 16px;
+        letter-spacing: 6px;
+        margin-bottom: 18px;
+      }
+
+      .pass-name {
+        font-size: 40px;
+        letter-spacing: 4px;
+        margin-bottom: 12px;
+      }
+
+      .pass-team {
+        font-size: 20px;
+        padding: 8px 26px;
+        margin-bottom: 24px;
+      }
+
+      .pass-code {
+        font-size: 22px;
+        letter-spacing: 2px;
+        padding: 20px 18px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .copy-btn {
+        padding: 18px 20px;
+        font-size: 19px;
+        border-radius: 14px;
+        letter-spacing: 3px;
+        margin-bottom: 18px;
+      }
+
+      .pass-note {
+        font-size: 16px;
+        line-height: 1.9;
+      }
+
+      .error-msg {
+        font-size: 17px;
+        padding: 18px 20px;
+        border-radius: 16px;
+      }
+
+      .back-link {
+        font-size: 16px;
+        margin-top: 22px;
+      }
+
+      .footer-note {
+        font-size: 16px;
+        line-height: 1.9;
+        margin-top: 28px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand {
+        font-size: 22px;
+        letter-spacing: 4px;
+      }
+
+      .main-title {
+        font-size: 52px;
+        letter-spacing: 8px;
+      }
+
+      .cover-title {
+        font-size: 26px;
+      }
+
+      .pass-name {
+        font-size: 34px;
+      }
+
+      .pass-code {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+        padding: 18px 14px;
+      }
+
+      .desc {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="invite-card">
+
+    <div class="card-header">
+      <div class="header-content">
+        <div class="brand">MILDTRANS</div>
+        <div class="badge">Q3 脑力挑战</div>
+        <h1 class="main-title">欢迎入局</h1>
+        <p class="sub-title">两室一弹 · 大搜查</p>
+      </div>
+    </div>
+
+    <div class="gold-line">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 状态一：封面 -->
+    <div class="panel active" id="coverPanel">
+      <div class="cover-body">
+        <div class="cover-icon">🎩</div>
+        <div class="cover-title">诚邀你加入这场脑力挑战</div>
+        <p class="cover-sub">
+          推理 × 协作 × 策略 × 年度战队积分<br/>
+          2026年9月20日 · 13:00 签到
+        </p>
+
+        <div class="cover-info">
+          <div class="cover-info-row">
+            <span class="cover-info-label">活动时间</span>
+            <span class="cover-info-value">9月20日 13:00—18:00</span>
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">活动主题</span>
+            <span class="cover-info-value">两室一弹 · 大搜查</span>
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">年度战队</span>
+            <span class="cover-info-value">
+              <span class="red">红队</span> · <span class="blue">蓝队</span>
+            </span>
+          </div>
+          <div class="cover-info-row">
+            <span class="cover-info-label">入场方式</span>
+            <span class="cover-info-value">凭个人入场码签到</span>
+          </div>
+        </div>
+
+        <button class="open-btn" id="openBtn" type="button">打开邀请函</button>
+        <p class="cover-footnote">
+          点击后输入姓名，获取你的专属入场码
+        </p>
+      </div>
+    </div>
+
+    <!-- 状态二：输入姓名 -->
+    <div class="panel" id="inputPanel">
+      <div class="card-body">
+        <p class="desc">
+          欢迎各位玩家加入这场脑力挑战。<br/>
+          输入你的<strong>姓名</strong>，获取专属<strong>入场码</strong>。
+        </p>
+
+        <div class="error-msg" id="errorMsg">未找到该姓名，请确认后重试</div>
+
+        <div class="input-group">
+          <input type="text" id="nameInput" placeholder="请输入你的姓名" maxlength="12" autocomplete="off" />
+          <button class="btn" id="generateBtn" type="button">获取入场码</button>
+        </div>
+
+        <div class="pass-card" id="passCard">
+          <div class="pass-content">
+            <div class="pass-label">YOUR ENTRY PASS</div>
+            <div class="pass-name" id="passName">—</div>
+            <div class="pass-team" id="passTeam">年度战队 —</div>
+            <div class="pass-code" id="passCode">----</div>
+            <button class="copy-btn" id="copyBtn" type="button">复制入场码</button>
+            <div class="pass-note">
+              复制保存入场码 · 入场时出示<br/>
+              <strong>13:00 签到</strong> · 迟到将影响战队积分
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;">
+          <span class="back-link" id="backLink">← 返回邀请函封面</span>
+        </div>
+
+        <p class="footer-note">
+          <strong>提示：</strong>入场码与姓名一一对应，请勿转发他人。<br/>
+          活动最终解释权归组委会所有。
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const playerData = [
+      { name: "卢婷婷", team: "红队", code: "C96E-F9D3-133E-783A-3D65" },
+      { name: "叶婉彤", team: "红队", code: "C810-AFAF-60B5-F628-6987" },
+      { name: "吴智慧", team: "红队", code: "B918-BD7F-AF42-4F42-1ACE" },
+      { name: "周金娜", team: "红队", code: "D957-4513-8A30-F91A-0F9C" },
+      { name: "李月娟", team: "红队", code: "7DF5-B5C6-DB2C-5506-CF7D" },
+      { name: "蒋慧", team: "红队", code: "F613-60D0-A856-3481-037F" },
+      { name: "郑展鸿", team: "红队", code: "DCBF-03E4-BF3B-5EF6-55C0" },
+      { name: "钟朝霞", team: "红队", code: "F66F-6697-02A5-E2FA-65F9" },
+      { name: "陈奇龙", team: "红队", code: "EFAA-71FA-C7FE-2D0F-FBBD" },
+      { name: "顾玉晓", team: "红队", code: "C2F5-3BB7-0016-E3ED-EECF" },
+      { name: "黄丽友", team: "红队", code: "7A4A-6FE3-BEFA-50A6-F1EB" },
+      { name: "何从新", team: "蓝队", code: "C437-1483-5CBE-CE19-9EBB" },
+      { name: "傅勇彪", team: "蓝队", code: "0969-9BBE-2C0F-4122-606C" },
+      { name: "凌丽", team: "蓝队", code: "3F73-8EA6-39DA-C8AA-1DDF" },
+      { name: "刘丽婷", team: "蓝队", code: "A885-E761-1789-0A19-03CA" },
+      { name: "刘阳", team: "蓝队", code: "C529-E1F5-B9AA-0276-161F" },
+      { name: "徐颖彤", team: "蓝队", code: "446C-2615-6B27-4D34-671C" },
+      { name: "曾慈美", team: "蓝队", code: "3785-0FF7-2DA4-8088-0913" },
+      { name: "洪默宇", team: "蓝队", code: "217C-22E4-71F4-F37D-6B43" },
+      { name: "赵会娟", team: "蓝队", code: "7B19-3BBF-6C02-4629-48D4" },
+      { name: "赵家明", team: "蓝队", code: "3FEC-6F2A-2C3B-1097-9DE4" },
+      { name: "黄东丽", team: "蓝队", code: "3A2D-3888-45BF-2320-A046" }
+    ];
+
+    const coverPanel = document.getElementById('coverPanel');
+    const inputPanel = document.getElementById('inputPanel');
+    const openBtn = document.getElementById('openBtn');
+    const backLink = document.getElementById('backLink');
+
+    const nameInput = document.getElementById('nameInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const passCard = document.getElementById('passCard');
+    const passName = document.getElementById('passName');
+    const passTeam = document.getElementById('passTeam');
+    const passCode = document.getElementById('passCode');
+    const copyBtn = document.getElementById('copyBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    function showInputPanel() {
+      coverPanel.classList.remove('active');
+      inputPanel.classList.add('active');
+      setTimeout(() => {
+        nameInput.focus();
+      }, 300);
+    }
+
+    function showCoverPanel() {
+      inputPanel.classList.remove('active');
+      coverPanel.classList.add('active');
+    }
+
+    openBtn.addEventListener('click', showInputPanel);
+    backLink.addEventListener('click', showCoverPanel);
+
+    function findPlayer(name) {
+      const trimmed = name.trim();
+      return playerData.find(p => p.name === trimmed);
+    }
+
+    function showPass() {
+      const name = nameInput.value.trim();
+      errorMsg.classList.remove('show');
+
+      if (!name) {
+        nameInput.focus();
+        nameInput.style.borderColor = '#d92b2b';
+        setTimeout(() => { nameInput.style.borderColor = '#1a1a1a'; }, 1200);
+        return;
+      }
+
+      const player = findPlayer(name);
+
+      if (!player) {
+        passCard.classList.remove('show');
+        errorMsg.classList.add('show');
+        nameInput.style.borderColor = '#d92b2b';
+        setTimeout(() => { nameInput.style.borderColor = '#1a1a1a'; }, 1200);
+        return;
+      }
+
+      passName.textContent = player.name;
+      passTeam.textContent = '年度战队 ' + player.team;
+      passCode.textContent = player.code;
+      passCard.classList.add('show');
+
+      copyBtn.textContent = '复制入场码';
+      copyBtn.classList.remove('copied');
+
+      setTimeout(() => {
+        passCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+
+    function copyCode() {
+      const code = passCode.textContent;
+      if (!code || code === '----') return;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(() => {
+          showCopied();
+        }).catch(() => {
+          fallbackCopy(code);
+        });
+      } else {
+        fallbackCopy(code);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.top = '0';
+      textarea.style.left = '0';
+      textarea.style.width = '2em';
+      textarea.style.height = '2em';
+      textarea.style.padding = '0';
+      textarea.style.border = 'none';
+      textarea.style.outline = 'none';
+      textarea.style.boxShadow = 'none';
+      textarea.style.background = 'transparent';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showCopied();
+      } catch (e) {
+        alert('复制失败，请手动长按入场码复制');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function showCopied() {
+      copyBtn.textContent = '✓ 已复制';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = '复制入场码';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    }
+
+    generateBtn.addEventListener('click', showPass);
+    copyBtn.addEventListener('click', copyCode);
+
+    nameInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') showPass();
+    });
+
+    nameInput.addEventListener('input', function () {
+      errorMsg.classList.remove('show');
+      if (passCard.classList.contains('show')) {
+        const player = findPlayer(nameInput.value);
+        if (player) {
+          passName.textContent = player.name;
+          passTeam.textContent = '年度战队 ' + player.team;
+          passCode.textContent = player.code;
+          copyBtn.textContent = '复制入场码';
+          copyBtn.classList.remove('copied');
+        } else {
+          passCard.classList.remove('show');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
